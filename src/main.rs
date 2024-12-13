@@ -10,7 +10,7 @@ use tokio::time::{Duration, sleep};
 #[tokio::main] // This is an attribute that tells the Rust compiler to generate the main function that uses the Tokio runtime.
 async fn main() { 
 
-    const SCREEN_WIDTH: usize = 100;
+    const MIN_SCREEN_WIDTH: usize = 100;
 
     let stream_route = warp::path!(String)
         .map(|text: String|{
@@ -19,12 +19,19 @@ async fn main() {
                     Ok(text) => text,
                     Err(_) => return,
                 };
+
+                let screen_width = if text.len()*20 > MIN_SCREEN_WIDTH {
+                    text.len()*20 + 20
+                } else {
+                    MIN_SCREEN_WIDTH
+                };
+
                 loop {
 
                     // Send a screen cleaner
                     yield Ok::<_, warp::Error>(warp::sse::Event::default().data("\x1B[2J\x1B[1;1H"));
 
-                    scrolling_text = scroll::scroll_text(&scrolling_text, SCREEN_WIDTH).await;
+                    scrolling_text = scroll::scroll_text(&scrolling_text, screen_width).await;
 
                     yield Ok::<_, warp::Error>(warp::sse::Event::default().data(scrolling_text.clone()));
                     sleep(Duration::from_millis(50)).await;
