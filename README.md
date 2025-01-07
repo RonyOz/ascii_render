@@ -7,7 +7,7 @@ This project is a web server that renders text in ASCII and animates it in the c
 1.  **Clone the repository:**
 
     ```bash
-    git clone [https://github.com/RonyOz/ascii_render.git](https://github.com/RonyOz/ascii_render.git)
+    git clone https://github.com/RonyOz/ascii_render.git
     ```
 
 2.  **Install the dependencies:**
@@ -27,7 +27,7 @@ This project is a web server that renders text in ASCII and animates it in the c
 4.  **Use `curl` to request the animation:**
 
     ```bash
-    curl [http://127.0.0.1:3030/your-text-here](http://127.0.0.1:3030/your-text-here)
+    curl http://127.0.0.1:3030/your-text-here
     ```
     Replace `your-text-here` with the text you want to animate.
 
